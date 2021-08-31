@@ -6,6 +6,7 @@
 #define TEST_PROCESO_H
 
 #include<iostream>
+#include <vector>
 
 using namespace std;
 
@@ -20,10 +21,21 @@ public:
 
 
     void toString(){
-        cout << procesoId;
-        cout << tema;
-        cout << paternidad;
-        cout << tiempoEjecucion;
+        cout << "Proceso: " + procesoId + "\n";
+        cout << "tema: " +tema  + "\n";
+        cout << "paternidad: " + paternidad  + "\n";
+        cout << "tiempo: " + tiempoEjecucion  + "\n";
+        cout << "prioridad: " + prioridad + "\n";
+    }
+
+    static Proceso parseProcess(vector<string> procesos){
+        Proceso proceso;
+        proceso.procesoId = procesos[0];
+        proceso.tema = procesos[1];
+        proceso.prioridad = procesos[2];
+        proceso.paternidad = procesos[3];
+        proceso.tiempoEjecucion = procesos[4];
+        return proceso;
     }
 
 };
