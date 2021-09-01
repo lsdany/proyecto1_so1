@@ -3,4 +3,4 @@ project(test)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(test main.cpp proceso.cpp proceso.h)
+add_executable(test main.cpp Proceso.cpp Proceso.h Bitacora.cpp Bitacora.h)
