@@ -10,9 +10,9 @@
 
 
 #include <iostream>
-#include <fstream>
 #include <string>
-#include "proceso.h"
+#include "Proceso.h"
+#include "Bitacora.h"
 #include <vector>
 
 vector<string> getProcessByLine();
@@ -20,6 +20,9 @@ vector<string> getProcessByLine();
 vector<Proceso> armarProcesos(vector<string> vector1);
 
 using namespace std;
+
+string ESTADO_INICIAL {"nuevo"};
+string ESTADO2 {"listo"};
 
 int main() {
 
@@ -34,7 +37,7 @@ int main() {
 
     /*
      * Paso 2
-     * Procesar cada linea para armar los objetos de los proceso
+     * Procesar cada linea para armar los objetos de los Proceso
      */
 
     vector<Proceso> procesos = armarProcesos(lineas);
@@ -105,8 +108,20 @@ vector<Proceso> armarProcesos(vector<string> vector1) {
 
 //METODO TEMPORAL, VA A SER REEMPLAZADO POR EL METODO DE LECTURA
 vector<string> getProcessByLine() {
-    vector<string> lineas {"4|Java|1|1|10|"};
+    vector<string> lineas {"1|2|3|4"};
+
     return lineas;
+}
+
+/**
+ * Metodo de ejemplo para la bitacora
+ * @param bitacora
+ */
+void pintarBitacora(Bitacora bitacora){
+
+    cout << bitacora.nombreProceso << endl;
+    cout << bitacora.id << endl;
+
 }
 
 

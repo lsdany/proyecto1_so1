@@ -18,6 +18,7 @@ public:
     string prioridad;
     string paternidad;
     string tiempoEjecucion;
+    string estado;
 
 
     void toString(){
