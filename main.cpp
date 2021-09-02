@@ -2,6 +2,7 @@
  * Grupo 2, Sistemas operativos
  *
  * Luisdany Israel Pernillo Gonzalez  7690-13-12063
+ * Brya André Recinos Mejía 7690-19-18053
  *
  *
  *
@@ -106,10 +107,20 @@ vector<Proceso> armarProcesos(vector<string> vector1) {
     return procesos;
 }
 
-//METODO TEMPORAL, VA A SER REEMPLAZADO POR EL METODO DE LECTURA
-vector<string> getProcessByLine() {
-    vector<string> lineas {"1|2|3|4"};
-
+//METODO YA REMPLAZADO PARA LEER EL ARCHIVO DESDE LA RUTA ESPESIFICADA POR EL USUARIO DESDE CONSOLA
+vector<string> getProcessByLine()
+{        
+    string ruta;
+    cout << "Ingresa la ruta de su archivo: ";
+    cin >> ruta;
+    string linea, texto;
+    ifstream archivo(ruta);
+    vector<string> lineas;
+    while (getline(archivo, linea)){
+    texto = linea;
+    lineas.push_back(texto);   
+    }
+    archivo.close();
     return lineas;
 }
 
