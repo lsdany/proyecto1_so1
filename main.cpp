@@ -107,7 +107,7 @@ vector<Proceso> armarProcesos(vector<string> vector1) {
     return procesos;
 }
 
-//METODO YA REMPLAZADO PARA LEER EL ARCHIVO DESDE LA RUTA ESPESIFICADA POR EL USUARIO DESDE CONSOLA
+//METODO YA REMPLAZADO PARA LEER EL ARCHIVO DESDE LA RUTA ESPESIFICADA POR EL USUARIO EN CONSOLA
 vector<string> getProcessByLine()
 {        
     string ruta;
