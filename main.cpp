@@ -3,7 +3,7 @@
  *
  * Luisdany Israel Pernillo Gonzalez  7690-13-12063
  * Brya André Recinos Mejía 7690-19-18053
- *
+ * Allan Roberto Castillo Sanchez 7690-14-6419
  *
  *
  */
@@ -19,6 +19,10 @@
 vector<string> getProcessByLine();
 
 vector<Proceso> armarProcesos(vector<string> vector1);
+
+vector<string> split (string str, char patron);
+
+void pintarProceso();
 
 using namespace std;
 
@@ -133,6 +137,34 @@ void pintarBitacora(Bitacora bitacora){
     cout << bitacora.nombreProceso << endl;
     cout << bitacora.id << endl;
 
+}
+
+/**
+ * Pintar procesos
+ */
+void pintarProceso(){
+
+
+
+}
+
+vector<string> split (string str, char patron){
+
+    int posInicial = 0;
+    int posEncontrada = 0;
+    string strSplitted;
+    vector<string> resultado;
+
+    while(posEncontrada >= 0){
+        posEncontrada = str.find(patron, posInicial);
+        strSplitted = str.substr(posInicial, posEncontrada - posInicial);
+        // Aumenta la posición encontrada
+        posInicial = posEncontrada + 1;
+        // Agrega el token extraído al vector
+        resultado.push_back(strSplitted);
+    }
+
+    return resultado;
 }
 
 
