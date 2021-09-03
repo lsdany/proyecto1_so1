@@ -111,6 +111,7 @@ vector<Proceso> armarProcesos(vector<string> vector1) {
 vector<string> getProcessByLine()
 {        
     string ruta;
+    int contador =0;
     cout << "Ingresa la ruta de su archivo: ";
     cin >> ruta;
     string linea, texto;
@@ -118,7 +119,10 @@ vector<string> getProcessByLine()
     vector<string> lineas;
     while (getline(archivo, linea)){
     texto = linea;
+    if (contador != 0){
     lineas.push_back(texto);   
+    }
+    contador++;
     }
     archivo.close();
     return lineas;
