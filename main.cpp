@@ -3,17 +3,14 @@
  *
  * Luisdany Israel Pernillo Gonzalez  7690-13-12063
  * Brya André Recinos Mejía 7690-19-18053
+ * Allan Roberto Castillo Sánchez 7690-14-6419
  *
- *
-
-
          * |0| -> procesoId
          * |1| -> Tema (descripcion)
          * |2| -> Prioridad
          * |3| -> Paternidad
          * |4| -> tiempo de ejecucion
          *
-
  *
  *
  */
