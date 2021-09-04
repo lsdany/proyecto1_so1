@@ -114,19 +114,13 @@ void procesar(vector<Proceso> procesos) {
 
         // buscar si el proceso tiene hijos
         int idPadre = p.procesoId;
-        bitacora.estado = p.estado;
-        pintarBitacora(bitacora);
 
         if (p.paternidad == 0) {
-            pintarProcesos(p);
 
             vector<Proceso> procesosHijos = getHijos(procesos, idPadre);
-            if(!procesosHijos.empty()){
+            if (!procesosHijos.empty()) {
 
-                p.estado = ESTADO_BLOQUEADO;
-                pintarProcesos(p);
-                bitacora.estado = p.estado;
-                pintarBitacora(bitacora);
+                vector<Proceso> hijosBloqueados;
 
                 for (Proceso pHijo: procesosHijos) {
 
@@ -144,14 +138,54 @@ void procesar(vector<Proceso> procesos) {
                     pintarBitacora(bitacoraHijo);
                     pintarProcesos(pHijo);
 
-                    sleep(pHijo.tiempoEjecucion);
 
-                    pHijo.estado = ESTADO_TERMINADO;
-                    pintarProcesos(pHijo);
-                    bitacoraHijo.estado = pHijo.estado;
-                    pintarBitacora(bitacoraHijo);
+                    if (pHijo.tiempoEjecucion > 20) {
+                        pHijo.tiempoEjecucion = pHijo.tiempoEjecucion - 20;
+
+                        sleep(20);
+
+                        pHijo.estado = ESTADO_BLOQUEADO;
+                        pintarProcesos(pHijo);
+                        bitacoraHijo.estado = pHijo.estado;
+                        pintarBitacora(bitacoraHijo);
+
+                        hijosBloqueados.push_back(pHijo);
+
+                    } else {
+                        sleep(pHijo.tiempoEjecucion);
+                        pHijo.estado = ESTADO_TERMINADO;
+                        pintarProcesos(pHijo);
+                        bitacoraHijo.estado = pHijo.estado;
+                        pintarBitacora(bitacoraHijo);
+                    }
+
                 }
+
+                if(!hijosBloqueados.empty()){
+                    for(Proceso phijoBloqueado : hijosBloqueados){
+
+                        Bitacora bitacoraHijoBloqueado = getBitacoraByProcess(phijoBloqueado);
+
+                        phijoBloqueado.estado = ESTADO_EJECUCION;
+                        bitacoraHijoBloqueado.estado = phijoBloqueado.estado;
+                        pintarBitacora(bitacoraHijoBloqueado);
+                        pintarProcesos(phijoBloqueado);
+
+                        sleep(phijoBloqueado.tiempoEjecucion);
+
+                        phijoBloqueado.estado = ESTADO_TERMINADO;
+                        pintarProcesos(phijoBloqueado);
+                        bitacoraHijoBloqueado.estado = phijoBloqueado.estado;
+                        pintarBitacora(bitacoraHijoBloqueado);
+                    }
+                }
+
             }
+
+            bitacora.estado = p.estado;
+            pintarBitacora(bitacora);
+
+            pintarProcesos(p);
 
             p.estado = ESTADO_LISTO;
             pintarProcesos(p);
@@ -207,24 +241,34 @@ vector<Proceso> generarProcesoHijos(vector<Proceso> procesosOriginales) {
     vector<Proceso> procesosConHijos;
     int contadorProcesos{1};
     for (int i = 0; i < procesosOriginales.size(); i++) {
-        Proceso p = procesosOriginales[i];
 
-        p.estado = ESTADO_NUEVO;
-        procesosConHijos.push_back(p);
+        //creamos hijos solo para los procesos que son padres
+        if(procesosOriginales[i].paternidad == 0){
 
-        int contadorHijos{1};
+            Proceso p = procesosOriginales[i];
 
-        for (int j = 0; j <= contadorProcesos; j++) {
-            Proceso pHijo;
-            pHijo.procesoId = totalProcesos++;
-            pHijo.tema = p.tema + "_hijo" + to_string(contadorHijos++);
-            pHijo.prioridad = p.prioridad;
-            pHijo.paternidad = p.procesoId;
-            pHijo.tiempoEjecucion = p.tiempoEjecucion;
-            pHijo.estado = ESTADO_NUEVO;
-            procesosConHijos.push_back(pHijo);
+            p.estado = ESTADO_NUEVO;
+            procesosConHijos.push_back(p);
+
+            int contadorHijos{1};
+
+            for (int j = 0; j <= contadorProcesos; j++) {
+                Proceso pHijo;
+                pHijo.procesoId = totalProcesos++;
+                pHijo.tema = p.tema + "_hijo" + to_string(contadorHijos++);
+                pHijo.prioridad = p.prioridad;
+                pHijo.paternidad = p.procesoId;
+                pHijo.tiempoEjecucion = p.tiempoEjecucion;
+                pHijo.estado = ESTADO_NUEVO;
+                procesosConHijos.push_back(pHijo);
+            }
+            contadorProcesos++;
+
+        }else{
+            Proceso p = procesosOriginales[i];
+            p.estado = ESTADO_NUEVO;
+            procesosConHijos.push_back(p);
         }
-        contadorProcesos++;
     }
 
     Bitacora bitacora;
@@ -234,11 +278,6 @@ vector<Proceso> generarProcesoHijos(vector<Proceso> procesosOriginales) {
     pintarBitacora(bitacora);
 
     return procesosConHijos;
-
-//    cout << "Total de proceso creados: " << procesosConHijos.size() << endl;
-//    for (Proceso p: procesosConHijos) {
-//        p.toString();
-//    }
 }
 
 vector<Proceso> armarProcesos(vector<string> vector1) {
@@ -326,7 +365,7 @@ void pintarProcesos(Proceso proceso) {
     char *horaChar = ctime(&hora);
 
     cout << "            -------" << endl;
-    cout << "Proceso ID: "<< "|  " << proceso.procesoId << "  | -----> " << proceso.estado << " " << horaChar;
+    cout << "Proceso ID: " << "|  " << proceso.procesoId << "  | ("<<proceso.tema<< ") -----> " << proceso.estado << " " << horaChar;
     cout << "            -------" << endl;
 }
 
