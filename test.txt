@@ -1,9 +1,9 @@
 ID|tema|prioridad|paternidad|tiempo|
 1|Firefox|1||5|
-1|Java|1||5|
-1|VLC|1||5|
-1|Chrome|1||5|
-1|Steam|1||5|
-1|Word|1||5|
-1|Excel|1||5|
-4|Visual Studio|1||10|
+2|Java|1||7|
+3|VLC|1||1|
+4|Chrome|1||9|
+5|Steam|1||3|
+6|Word|1||10|
+7|Excel|1||15|
+8|Visual Studio|1||10|

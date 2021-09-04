@@ -7,36 +7,54 @@
 
 #include<iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Proceso {
 
 public:
-    string procesoId;
+    int procesoId{0};
     string tema;
     string prioridad;
-    string paternidad;
-    string tiempoEjecucion;
+    int paternidad{0};
+    int tiempoEjecucion{0};
     string estado;
 
 
-    void toString(){
-        cout << "Proceso: " + procesoId + "\n";
-        cout << "tema: " +tema  + "\n";
-        cout << "paternidad: " + paternidad  + "\n";
-        cout << "tiempo: " + tiempoEjecucion  + "\n";
-        cout << "prioridad: " + prioridad + "\n";
+    void toString() const {
+        cout << "Proceso: " << procesoId << endl;
+        cout << "tema: " + tema << endl;
+        cout << "paternidad: " << paternidad << endl;
+        cout << "tiempo: " << tiempoEjecucion << endl;
+        cout << "prioridad: " + prioridad << endl;
+        cout << "estado: " + estado << endl;
+        cout << "-------------------------" << endl;
     }
 
-    static Proceso parseProcess(vector<string> procesos){
+    static Proceso parseProcess(vector<string> procesos) {
         Proceso proceso;
-        proceso.procesoId = procesos[0];
+        proceso.procesoId = std::stoi(procesos[0]);
         proceso.tema = procesos[1];
         proceso.prioridad = procesos[2];
-        proceso.paternidad = procesos[3];
-        proceso.tiempoEjecucion = procesos[4];
+        if (isNumber(procesos[3])) {
+            proceso.paternidad = std::stoi(procesos[3]);
+        }else{
+            proceso.paternidad = 0;
+        }
+
+        if(isNumber(procesos[4])){
+            proceso.tiempoEjecucion = std::stoi(procesos[4]);
+        } else {
+            proceso.tiempoEjecucion = 0;
+        }
+
         return proceso;
+    }
+
+    static bool isNumber(const std::string &s) {
+        return !s.empty() && std::find_if(s.begin(),
+                                          s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
     }
 
 };

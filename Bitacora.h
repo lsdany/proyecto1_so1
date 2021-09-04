@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <ctime>
 
 #ifndef TEST_BITACORA_H
 #define TEST_BITACORA_H
@@ -13,9 +14,21 @@ class Bitacora {
 
 public:
 
-    int id;
+    int id{0};
     string nombreProceso;
+    string accion;
+    string estado;
+    time_t fecha {time(0)};
 
+
+    string print(){
+
+        if(id != 0){
+            return "Proceso: " + to_string(id) + "-" + nombreProceso + "-" + accion + "-" +  estado + "-" + ctime(&fecha) ;
+        } else {
+            return nombreProceso + "-" + accion + "-" +  estado + "-" + ctime(&fecha) ;
+        }
+    }
 };
 
 
